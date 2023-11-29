@@ -5,13 +5,13 @@ I need to change these files:
 - src\lib\title-templates.psm1 (LOGO)
 - CONTRIBUTING.md
 - README.md
-- Win10ScriptGUI.ps1 (Window Title)
+- WinDebloatTools.ps1 (Window Title)
 -->
 
 <h2 align="center">
-<img src="src/assets/script-image.png" style="vertical-align: bottom" width="90%">
+<img src="src/assets/script-logo.png" style="vertical-align: bottom" width="90%">
 
-[![PSScriptAnalyzer](https://github.com/LeDragoX/Win-Debloat-Tools/actions/workflows/powershell-linter.yml/badge.svg?style=flat)](https://github.com/LeDragoX/Win-Debloat-Tools/actions/workflows/powershell-linter.yml)
+[![PSScriptAnalyzer](https://github.com/LeDragoX/Win-Debloat-Tools/actions/workflows/powershell.yaml/badge.svg?style=flat)](https://github.com/LeDragoX/Win-Debloat-Tools/actions/workflows/powershell.yaml)
 ![GitHub issues](https://img.shields.io/github/issues/LeDragoX/Win-Debloat-Tools?label=Issues)
 ![GitHub license](https://img.shields.io/github/license/LeDragoX/Win-Debloat-Tools?color=blue&label=License)
 [![Commit rate](https://img.shields.io/github/commit-activity/m/LeDragoX/Win-Debloat-Tools?label=Commit%20rate)](https://github.com/LeDragoX/Win-Debloat-Tools/commits/master)
@@ -27,7 +27,7 @@ _These scripts will Customize, Debloat and Improve Privacy/Performance and Syste
 
 This has a collection of scripts to tweak the system per category, using different functions to adjust the system settings and make Windows great again! You can also install your favorite softwares through the GUI with just one click after being selected.
 
-> _Use on a fresh Windows install to note the differences. Using an admin account is recommended to avoid any compatibility issues._
+> _Use on a fresh Windows install to notice the differences. Using an admin account is recommended to avoid any compatibility issues._
 
 ⚠️ **DISCLAIMER:** _You're doing this at your own risk, I am not responsible for any data loss or damage that may occur. It's not guaranteed that every feature removed from the system can be easily restored._
 
@@ -63,43 +63,42 @@ Code located in the `main` branch is considered stable, the `develop` branch con
   </table>
 </div>
 
+## ✨ Usage
+
+**To run a variant of the script, follow these steps:**
+
+- Extract the **entire** `.zip` file to another folder.
+- Run `OpenTerminalHere.cmd` (try to `run as admin` if nothing happens at all).
+- Copy and Paste one of the lines below on your **Terminal** to unblock the scripts and execute it:
+
+### GUI Version
+
+```ps1
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force; ls -Recurse *.ps*1 | Unblock-File; .\"WinDebloatTools.ps1"
+```
+
+<div align="center">
+
+![Script GUI](./src/assets/script-gui.png)
+_The `Apply Tweaks` button is the main one for debloating._
+
+</div>
+
+### **CLI Version** (Minimal, good for automation)
+
+```ps1
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force; ls -Recurse *.ps*1 | Unblock-File; .\"WinDebloatTools.ps1" 'CLI'
+```
+
+**[Scripts](./src/scripts) can be run individually, pick what you need.**
+
 ## 🔄️ Roll-Back
 
 **If something breaks you can rely on:**
 
-1. If you want (almost) everything to it's original state, use the `Undo Tweaks` button on [`Win10ScriptGUI.ps1`](./Win10ScriptGUI.ps1).
+1. If you want **(almost)** everything to it's original state, use the `Undo Tweaks` button on [`WinDebloatTools.ps1`](./WinDebloatTools.ps1).
 2. A restoration point done by the script itself;
-3. The `Repair Windows` button on [`Win10ScriptGUI.ps1`](./Win10ScriptGUI.ps1);
-
-## ❗ Usage Requirements
-
-The `Win10Script(CLI/GUI).ps1` does not make everything automatically, so follow these steps.
-
-- Extract the `.zip` file to another folder.
-- Run `OpenTerminalHere.cmd` (try as admin if nothing happens at all).
-- Enable execution of PowerShell scripts and Unblock PowerShell scripts and modules within this directory (Down below).
-
-### **GUI Version**
-
-- Copy and Paste this entire line below on **PowerShell**:
-
-```ps1
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force; ls -Recurse *.ps*1 | Unblock-File; .\"Win10ScriptGUI.ps1"
-```
-
-![Script GUI](./src/assets/script-gui.gif)
-
-_The `Apply Tweaks` button is the main one for debloating._
-
-### **CLI Version** (Minimal, good for automation)
-
-- Copy and Paste this entire line below on **PowerShell**:
-
-```ps1
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force; ls -Recurse *.ps*1 | Unblock-File; .\"Win10ScriptCLI.ps1"
-```
-
-**[Scripts](./src/scripts) can be run individually, pick what you need.**
+3. The `Repair Windows` button on [`WinDebloatTools.ps1`](./WinDebloatTools.ps1);
 
 ## ☑️ Common Script Features
 
@@ -110,20 +109,17 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force; ls -Recurse *.ps*1 |
 
 - [Import all necessary _modules_ before executing everything](./src/lib/);
 - Logs both script runs on `C:\Users\<<USERNAME>>\AppData\Local\Temp\Win-DT-Logs`;
-- [Make a Restore Point and Backup the Hosts file](./src/scripts/backup-system.ps1);
-- [Install _Winget/Chocolatey_ package managers by default](./src/scripts/install-package-managers.ps1);
-  - Creates a new Scheduled Task to daily upgrade all available softwares via _Winget_ at **12:00** and _Chocolatey_ at **13:00**;
-  - Find the Scheduled Task on `Task Scheduler > Microsoft > Windows > PowerShell > ScheduledJobs > Chocolatey/Winget Daily Upgrade`;
-  - Register daily upgrade logs on `C:\Users\<<USERNAME>>\AppData\Local\Temp\Win-DT-Logs` and remove old log files;
+- [Make a Restore Point and Backup the Hosts file](./src/scripts/Backup-System.ps1);
 - [Download AdwCleaner and Run the latest version for _Virus/Adware_ scan and from OOShutUp10 and import all Recommended settings from a file](./src/scripts/silent-debloat-softwares.ps1);
-- [Disable _non-essential_ Telemetry from Scheduled Tasks and Optimize it](./src/scripts/optimize-task-scheduler.ps1);
-- [Disable _heavy_ Services, but enable some on SSDs for optimum performance](./src/scripts/optimize-services.ps1);
-- [Remove _Bloatware_ UWP Apps that comes with Windows 10+, except from my choice](./src/scripts/remove-bloatware-apps.ps1);
-- [Optimize Privacy by disabling more telemetry parts and changing GPOs, all through changing registry keys](./src/scripts/optimize-privacy.ps1);
-- [Optimize Performance by changing away from default settings that slowdowns the system, utilizing _PowerShell_ commands and changing registries to disable features](./src/scripts/optimize-performance.ps1);
-- [Apply General Personalization tweaks via Registry and _PowerShell_ commands](./src/scripts/personal-tweaks.ps1);
-- [Help improve the Security of Windows while maintaining performance](./src/scripts/optimize-security.ps1);
-- [Disable _obsolete_ Windows optional features and enable some that might help](./src/scripts/optimize-windows-features.ps1);
+- [Disable _non-essential_ Telemetry from Scheduled Tasks and Optimize it](./src/scripts/Optimize-TaskScheduler.ps1);
+- [Disable _heavy_ Services, but enable some on SSDs for optimum performance](./src/scripts/Optimize-ServicesRunning.ps1);
+- [Remove some of the legacy system components called "_capabilities_", except the most popular ones](./src/scripts/Remove-CapabilitiesList.ps1);
+- [Remove _Bloatware_ UWP Apps that comes with Windows 10+, except from my choice](./src/scripts/Remove-BloatwareAppsList.ps1);
+- [Optimize Privacy by disabling more telemetry parts and changing GPOs, all through changing registry keys](./src/scripts/Optimize-Privacy.ps1);
+- [Optimize Performance by changing away from default settings that slowdowns the system, utilizing _PowerShell_ commands and changing registries to disable features](./src/scripts/Optimize-Performance.ps1);
+- [Apply General Personalization tweaks via Registry and _PowerShell_ commands](./src/scripts/Register-PersonalTweaksList.ps1);
+- [Help improve the Security of Windows while maintaining performance](./src/scripts/Optimize-Security.ps1);
+- [Disable _obsolete_ Windows optional features and enable some that might help](./src/scripts/Optimize-WindowsFeaturesList.ps1);
 
 </details>
 
@@ -134,38 +130,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force; ls -Recurse *.ps*1 |
 
 ### System Tweaks
 
-#### System Debloat Tools
-
-- `Apply Tweaks`: Run every Common Tweak scripts ([Go To **☑️ Common Script Features** section](#%EF%B8%8F-common-script-features));
-- `Undo Tweaks`: Re-apply some tweaks and _Revert_ all possible ones, covering the, `ShutUp10 settings`, `Scheduled Tasks`, `Services`, `Privacy and Performance`, `Personal` and `Optional Features` tweaks, then try to `Reinstall Pre-Installed Apps`;
-- [`Remove Microsoft Edge`](./src/scripts/remove-msedge.ps1): uninstalls Microsoft Edge/WebView, then remove the remaining files;
-- [`Remove OneDrive`](./src/scripts/remove-onedrive.ps1): completely removes OneDrive from the System, re-install is possible via Win Store;
-- [`Remove Xbox`](./src/scripts/remove-xbox.ps1): wipe Xbox Apps, disable Services related to Xbox and GameBar/GameDVR;
-
-#### Install System Apps ([Can be found here](src/utils/install-individual-system-apps.psm1))
-
-_This section contains options to restore the system apps, by downloading them from the **MS Store** (mostly) and doing **Stock configurations** (for some Apps)._
-
-- `Get H.265 video codec`: Get the missing HEVC support to run **H.265 videos** through MS Store, it's a must have that didn't came with (Free and DIY).
-- `Dolby Audio`;
-- `Microsoft Edge`;
-- `OneDrive`;
-- `Paint + Paint 3D`;
-- `Sound Recorder`;
-- `Taskbar Widgets`;
-- `Windows Media Player (UWP)`;
-- `Xbox`: Re-enable Xbox related functionalities and reinstall the Xbox Apps available on MS Store.
-
-#### Other Tools
-
-_This section contains tools to solve some Windows problems and get info about how much debloated the system is._
-
-- [`Randomize System Color`](./src/scripts/other-scripts/new-system-color.ps1): Changes the Windows color pallette to a random generated hex color;
-- [`Reinstall Pre-Installed Apps`](./src/scripts/reinstall-pre-installed-apps.ps1): Rebloat Windows with all the Pre-Installed Apps;
-- [`Repair Windows`](./src/scripts/repair-windows.ps1): Try to Completely fix the Windows worst problems via Command Line;
-- [`Show Debloat Info`](./src/scripts/other-scripts/show-debloat-info.ps1): Make an overall check-up from disabled and enabled Windows Components (Compare before and after applying tweaks, it's a great difference);
-
-#### Customize System Features ([Can be found here](src/utils/individual-tweaks.psm1))
+#### Customize System Features ([Can be found here](src/utils/Individual-Tweaks.psm1))
 
 - `Enable/Disable Dark Theme`: Apply _Dark Theme_ or _Light Theme_ on Windows;
 - `Enable/Disable Activity History`: Manages the **Activity History** setting;
@@ -173,6 +138,8 @@ _This section contains tools to solve some Windows problems and get info about h
 - `Enable/Disable Clipboard History`: Manages the **Clipboard History** setting, that keeps a history from your clipboard pressing `Windows + V` key;
 - `Enable/Disable Clipboard Sync Across Devices`: Manages the **Clipboard Sync Across Devices** setting, which allows to use the same clipboard for multiple devices (must be using a MS account);
 - `Enable/Disable Cortana`: Manages the **Cortana** setting;
+- `Enable/Disable Hibernate`: Manages the **Hibernate** setting;
+- `Enable/Disable Legacy Context Menu`: Bring back the Windows 10 **context menu** from right-clicking or default on Windows 11;
 - `Enable/Disable Old Volume Control`: Manages the **Old Volume Control (Win 7/8.1)** setting;
 - `Enable/Disable Online Speech Recognition`: Manages the **Online Speech Recognition** setting, by pressing the keys `Windows + H` you can speak through your mic, then use it to type text using your voice;
 - `Enable/Disable Phone Link`: Manages the **Phone Link** setting, which can link your Android/iPhone devices notifications to Windows;
@@ -182,46 +149,85 @@ _This section contains tools to solve some Windows problems and get info about h
 - `Enable/Disable WSearch Service`: Manages the **Windows Search Service** setting;
 - `Enable/Disable Xbox Game Bar/DVR/Mode`: Manages the **Xbox Game Bar/DVR/Mode** setting, that can open Game Bar anywhere, record clips from games and change Game Mode;
 
-#### Optional Features ([Can be found here](src/utils/individual-tweaks.psm1))
+#### System Debloat Tools
+
+- `Apply Tweaks`: Run every Common Tweak scripts ([Go To **☑️ Common Script Features** section](#%EF%B8%8F-common-script-features));
+- `Undo Tweaks`: Re-apply some tweaks and _Revert_ all possible ones, covering the, `ShutUp10 settings`, `Scheduled Tasks`, `Services`, `Privacy and Performance`, `Personal` and `Optional Features` tweaks, then try to `Reinstall Pre-Installed Apps`;
+- [`Remove Microsoft Edge`](./src/scripts/Remove-MSEdge.ps1): uninstalls **Microsoft Edge**, disables Scheduled Tasks and Services related to Edge, then remove the remaining files, **Edge Web View** files will remain untouched, but apps which depends on **WebView2** will not install unless you install Microsoft Edge;
+- [`Remove OneDrive`](./src/scripts/Remove-OneDrive.ps1): completely removes OneDrive from the System, re-install is possible via Win Store;
+- [`Remove Xbox`](./src/scripts/Remove-Xbox.ps1): wipe Xbox Apps, disable Services related to Xbox and GameBar/GameDVR;
+
+#### Install System Apps ([Can be found here](src/utils/Install-Individual-System-Apps.psm1))
+
+_This section contains options to restore the system apps, by downloading them from the **MS Store** (mostly) and doing **Stock configurations** (for some Apps)._
+
+- `Dolby Audio`;
+- `Microsoft Edge`;
+- `OneDrive`;
+- `Paint + Paint 3D`;
+- `Phone Link`;
+- `Quick Assist`;
+- `Sound Recorder`;
+- `Taskbar Widgets`;
+- `Windows Media Player (UWP)`;
+- `Xbox`: Re-enable Xbox related functionalities and reinstall the Xbox Apps available on MS Store.
+
+#### Other Tools
+
+_This section contains tools to solve some Windows problems and get info about how much debloated the system is._
+
+- [`Randomize System Color`](./src/scripts/other-scripts/New-SystemColor.ps1): Changes the Windows color pallette to a random generated hex color;
+- [`Reinstall Pre-Installed Apps`](./src/scripts/Install-DefaultAppsList.ps1): Rebloat Windows with all the Pre-Installed Apps;
+- [`Repair Windows`](./src/scripts/Repair-WindowsSystem.ps1): Try to Completely fix the Windows worst problems via Command Line;
+- [`Show Debloat Info`](./src/scripts/other-scripts/Show-DebloatInfo.ps1): Make an overall check-up from disabled and enabled Windows Components (Compare before and after applying tweaks, it's a great difference);
+
+#### Windows Update ([Can be found here](src/utils/Individual-Tweaks.psm1))
+
+- `Enable/Disable Automatic Windows Update`: Set Windows updates to automatic or manual;
+
+#### Optional Features ([Can be found here](src/utils/Individual-Tweaks.psm1))
 
 _This section can manually adjust `Optional Features` from the system, working as a ON/OFF toggle._
 
-#### Miscellaneous Features ([Can be found here](src/utils/individual-tweaks.psm1))
+#### Task Scheduler ([Can be found here](src/utils/Individual-Tweaks.psm1))
+
+_This section can manually adjust `Scheduled Tasks` from the system, working as a ON/OFF toggle._
+
+#### Services ([Can be found here](src/utils/Individual-Tweaks.psm1))
+
+_This section can manually adjust `Services` from the system, working as a ON/OFF toggle._
+
+#### Windows Capabilities ([Can be found here](src/utils/Individual-Tweaks.psm1))
+
+_This section can manually adjust `Windows Capabilities` from the system, working as a ON/OFF toggle._
+
+#### Miscellaneous Features ([Can be found here](src/utils/Individual-Tweaks.psm1))
 
 - `Enable/Disable Encrypted DNS`: Sets the DNS Client Servers to **Cloudflare's** and **Google's** (ipv4 and ipv6), and enables **DNS Over HTTPS** on _Windows 11_.
 - `Enable/Disable God Mode`: Manages the hidden Desktop folder called "**God Mode**";
+- `Enable/Disable Mouse Acceleration`: Manages the **Enhance Pointer Precision** setting from mouse settings;
 - `Enable/Disable Mouse Natural Scroll`: Sets the mac-like mouse scrolling behavior, basically reverts mouse scroll direction;
 - `Enable/Disable Take Ownership menu`: [_Enables_](./src/utils/enable-take-ownership-context-menu.reg) or [_Disables_](src/utils/disable-take-ownership-context-menu.reg) the **Take Ownership context menu**;
 - `Enable/Disable Shutdown PC shortcut`: Manages the **Shutdown Computer desktop shortcut**;
 
 ### Software Install
 
+- [Install _Winget/Chocolatey_ package managers](./src/lib/package-managers/);
+
+  - Be able to install the listed software in this script! Even from System apps.
+  - **Importante Note:** When proceeding to install a new app, the script will automatically install the required package manager for that operation.
+
+- [**Create** or **Remove** a Daily Upgrade Task for _Winget/Chocolatey_ packages](./src/lib/package-managers/);
+
+  - Creates a new Scheduled Job to daily upgrade all available softwares via _Winget_ at **12:00** and _Chocolatey_ at **13:00**;
+  - Register daily upgrade logs on `C:\Users\<<USERNAME>>\AppData\Local\Temp\Win-DT-Logs` and remove old log files;
+
+- `Remove All Chocolatey Packages`: List all packages from Chocolatey which are installed and remove everything at once;
+
 - `Upgrade All Softwares`: Upgrades all Softwares installed on your machine installed through _Winget_ and _Chocolatey_.
   - WSL will only update itself, not the distros installed.
 - `Install Selected`: Install the selected apps by marking the checkbox(es);
-- `Uninstall Mode`: Default as OFF, clicking this will switch the `Install Selected` button to `Uninstall Selected` and uninstall every selected apps (**Advice**: Blue colored buttons may not be able to uninstall completely and WSL UWP Apps, but WSL Distros will be unregistered);
-
-</details>
-
-## ⚡ Troubleshooting Known Issues
-
-> For each issue, expand the issue you're looking for,
-> and Open PowerShell as admin to copy + paste it's content:
-
-<details>
-  <summary>Fix <code>NVIDIA Control Panel</code></summary>
-
-> Only this time (Recommended - Consumes less RAM after boot)
-
-```Powershell
-Get-Service "NVDisplay.ContainerLocalSystem" | Set-Service -StartupType Manual -PassThru | Start-Service
-```
-
-> Permanently (Keeps the service running along with the system)
-
-```Powershell
-Get-Service "NVDisplay.ContainerLocalSystem" | Set-Service -StartupType Automatic -PassThru | Start-Service
-```
+- `Uninstall Mode`: Default as OFF, clicking this will switch the `Install Selected` button to `Uninstall Selected` and uninstall every selected apps (**Advice:** differently colored buttons may not be able to uninstall completely and WSL UWP Apps, but WSL Distros will be unregistered);
 
 </details>
 
@@ -259,7 +265,8 @@ Get-Service "NVDisplay.ContainerLocalSystem" | Set-Service -StartupType Automati
 
 ## ➕ Contributing
 
-Found a _bug_ or want a _new feature_? Please check out the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+Found a _bug_ or want a _new feature_? You can open a new `Issue` [here](https://github.com/LeDragoX/Win-Debloat-Tools/issues/new/choose).
+Wanting to add improvements or fixes? Please check out the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## 📝 License
 
